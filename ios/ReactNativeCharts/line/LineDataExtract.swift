@@ -63,7 +63,12 @@ class LineDataExtract : DataExtract {
         if config["drawCircleHole"].bool != nil {
             lineDataSet.drawCircleHoleEnabled = config["drawCircleHole"].boolValue
         }
-        
+      
+      
+        if config["boundedFill"].bool != nil {
+          lineDataSet.boundedFill = config["boundedFill"].boolValue
+        }
+      
         if config["dashedLine"].exists() {
             let dashedLine = config["dashedLine"]
             var lineLength = CGFloat(0);
@@ -99,7 +104,11 @@ class LineDataExtract : DataExtract {
             }
             
             if dict["y"].number != nil {
+              if dict["y2"].number != nil {
+                entry = ChartDataEntry(x: x, y: dict["y"].doubleValue, y2: dict["y2"].doubleValue, data: dict as AnyObject?);
+              } else {
                 entry = ChartDataEntry(x: x, y: dict["y"].doubleValue, data: dict as AnyObject?);
+              }
             } else {
                 fatalError("invalid data " + values.description);
             }
