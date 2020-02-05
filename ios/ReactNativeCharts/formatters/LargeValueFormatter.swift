@@ -30,7 +30,8 @@ open class LargeValueFormatter: NSObject, IValueFormatter, IAxisValueFormatter
 
     fileprivate func format(_ value: Double) -> String
     {
-        var sig = value
+        var sig = abs(value)
+        let sign = value < 0 ? "-" : ""
         var length = 0
         let maxLength = suffix.count - 1
 
@@ -40,7 +41,11 @@ open class LargeValueFormatter: NSObject, IValueFormatter, IAxisValueFormatter
             length += 1
         }
 
-        var r = String(format: "%2.1f", sig) + suffix[length]
+        let valueFormatter = NumberFormatter()
+        valueFormatter.maximumFractionDigits = 2
+        valueFormatter.minimumFractionDigits = 0
+
+        var r = sign + (valueFormatter.string(from: NSNumber(value: sig)) ?? "") + suffix[length]
 
         if appendix != nil
         {

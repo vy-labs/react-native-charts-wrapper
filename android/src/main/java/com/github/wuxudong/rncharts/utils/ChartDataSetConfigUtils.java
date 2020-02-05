@@ -79,7 +79,14 @@ public class ChartDataSetConfigUtils {
                 if (BridgeUtils.validate(config, ReadableType.String, "timeUnit")) {
                     timeUnit = TimeUnit.valueOf(config.getString("timeUnit").toUpperCase());
                 }
-                dataSet.setValueFormatter(new DateFormatter(valueFormatterPattern, since, timeUnit));
+
+                Locale locale = Locale.getDefault();
+                
+                if (BridgeUtils.validate(config, ReadableType.String, "locale")) {
+                    locale = Locale.forLanguageTag(config.getString("locale"));
+                }
+
+                dataSet.setValueFormatter(new DateFormatter(valueFormatterPattern, since, timeUnit, locale));
             } else {
                 dataSet.setValueFormatter(new CustomFormatter(valueFormatter));
             }
@@ -127,7 +134,7 @@ public class ChartDataSetConfigUtils {
 
             switch (config.getMap("fillGradient").getString("orientation")) {
                 case "TOP_BOTTOM":
-                    orientation = GradientDrawable.Orientation.BOTTOM_TOP;
+                    orientation = GradientDrawable.Orientation.TOP_BOTTOM;
                     break;
                 case "TR_BL":
                     orientation = GradientDrawable.Orientation.TR_BL;
@@ -156,7 +163,7 @@ public class ChartDataSetConfigUtils {
                     orientation,
                     colors);
             gd.setCornerRadius(0f);
-
+            gd.setAlpha(config.getInt("fillAlpha"));
             dataSet.setFillDrawable(gd);
         } else if (BridgeUtils.validate(config, ReadableType.Number, "fillColor")) {
             dataSet.setFillColor(config.getInt("fillColor"));

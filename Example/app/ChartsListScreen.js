@@ -8,7 +8,8 @@ import {
   Text,
 } from 'react-native';
 
-import {StackNavigator, SafeAreaView} from 'react-navigation';
+import {createAppContainer, SafeAreaView} from 'react-navigation';
+import {createStackNavigator } from 'react-navigation-stack';
 
 import AxisLineChartScreen from './AxisLineChartScreen';
 import MultipleChartScreen from './MultipleChartScreen';
@@ -200,7 +201,7 @@ MainScreen.navigationOptions = {
   title: 'Home',
 };
 
-const ChartsExplorer = StackNavigator(
+const ChartsExplorer = createStackNavigator(
   {
     Index: {
       screen: MainScreen,
@@ -221,4 +222,4 @@ const ChartsExplorer = StackNavigator(
   },
 );
 
-export default ChartsExplorer;
+export default createAppContainer(ChartsExplorer);

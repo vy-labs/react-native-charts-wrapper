@@ -7,9 +7,10 @@ buildscript {
             url 'https://maven.google.com/'
             name 'Google'
         }
+        google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.3'  // UPGRADE VERSION TO 3.x
+        classpath 'com.android.tools.build:gradle:3.5.0'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -19,6 +20,7 @@ buildscript {
 allprojects {
     repositories {
         mavenLocal()
+        google()
         jcenter()
         maven {
             // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
@@ -29,13 +31,17 @@ allprojects {
             name 'Google'
         }
         maven { url "https://jitpack.io" }    // ADD jitpack.io, IT IS USED BY MPAndroidChart
+        maven {
+           // Android JSC is installed from npm
+            url("$rootDir/../node_modules/jsc-android/dist")
+        }
     }
 }
 
 ext {
-    buildToolsVersion = "27.0.3"   // UPGRADE VERSION
+    buildToolsVersion = "28.0.3"
     minSdkVersion = 16
-    compileSdkVersion = 26
-    targetSdkVersion = 26
-    supportLibVersion = "26.1.0"
+    compileSdkVersion = 28
+    targetSdkVersion = 28
+    supportLibVersion = "28.0.0"
 }
